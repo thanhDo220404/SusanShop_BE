@@ -1,0 +1,271 @@
+{
+  "SizeCategory": [
+    {
+      "_id": "sc001",
+      "name": "Clothing",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "sc002",
+      "name": "Shoes",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "SizeOption": [
+    {
+      "_id": "so001",
+      "name": "S",
+      "size_category_id": "sc001",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so002",
+      "name": "M",
+      "size_category_id": "sc001",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so003",
+      "name": "L",
+      "size_category_id": "sc001",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so004",
+      "name": "XL",
+      "size_category_id": "sc001",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so005",
+      "name": "38",
+      "size_category_id": "sc002",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so006",
+      "name": "39",
+      "size_category_id": "sc002",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "so007",
+      "name": "40",
+      "size_category_id": "sc002",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "Color": [
+    {
+      "_id": "cl001",
+      "name": "Red",
+      "hex": "#FF0000",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "cl002",
+      "name": "Blue",
+      "hex": "#0000FF",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "cl003",
+      "name": "Black",
+      "hex": "#000000",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "cl004",
+      "name": "White",
+      "hex": "#FFFFFF",
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "ProductCategory": [
+    {
+      "_id": "pc001",
+      "name": "Men",
+      "slug": "men",
+      "description": "Men's fashion collection",
+      "size_category_id": "sc001",
+      "parent_category_id": null,
+      "status": true,
+      "sort_order": 1,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pc002",
+      "name": "Women",
+      "slug": "women",
+      "description": "Women's fashion collection",
+      "size_category_id": "sc001",
+      "parent_category_id": null,
+      "status": true,
+      "sort_order": 2,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pc003",
+      "name": "T-Shirts",
+      "slug": "t-shirts",
+      "description": "T-shirts for men and women",
+      "size_category_id": "sc001",
+      "parent_category_id": "pc001",
+      "status": true,
+      "sort_order": 1,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pc004",
+      "name": "Shoes",
+      "slug": "shoes",
+      "description": "Footwear collection",
+      "size_category_id": "sc002",
+      "parent_category_id": "pc002",
+      "status": true,
+      "sort_order": 1,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "Product": [
+    {
+      "_id": "pr001",
+      "category_id": "pc003",
+      "name": "Classic Cotton T-Shirt",
+      "slug": "classic-cotton-t-shirt",
+      "description": "Comfortable 100% cotton t-shirt, perfect for everyday wear.",
+      "status": true,
+      "features": true,
+      "deleted_at": null,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pr002",
+      "category_id": "pc003",
+      "name": "Graphic Print T-Shirt",
+      "slug": "graphic-print-t-shirt",
+      "description": "Stylish graphic print t-shirt with modern design.",
+      "status": true,
+      "features": false,
+      "deleted_at": null,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pr003",
+      "category_id": "pc004",
+      "name": "Running Sneakers",
+      "slug": "running-sneakers",
+      "description": "Lightweight running sneakers with cushioned sole.",
+      "status": true,
+      "features": true,
+      "deleted_at": null,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ],
+  "ProductVariant": [
+    {
+      "_id": "pv001",
+      "product_id": "pr001",
+      "price": 250000,
+      "discount": 10,
+      "sale_starts_at": "2026-05-14T00:00:00.000Z",
+      "sale_ends_at": "2026-05-21T00:00:00.000Z",
+      "color_id": "cl003",
+      "size_id": "so001",
+      "stock": 50,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pv002",
+      "product_id": "pr001",
+      "price": 250000,
+      "discount": 10,
+      "sale_starts_at": "2026-05-14T00:00:00.000Z",
+      "sale_ends_at": "2026-05-21T00:00:00.000Z",
+      "color_id": "cl004",
+      "size_id": "so002",
+      "stock": 30,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pv003",
+      "product_id": "pr001",
+      "price": 250000,
+      "discount": 0,
+      "sale_starts_at": null,
+      "sale_ends_at": null,
+      "color_id": "cl003",
+      "size_id": "so003",
+      "stock": 20,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pv004",
+      "product_id": "pr002",
+      "price": 300000,
+      "discount": 15,
+      "sale_starts_at": "2026-05-14T00:00:00.000Z",
+      "sale_ends_at": "2026-05-28T00:00:00.000Z",
+      "color_id": "cl001",
+      "size_id": "so002",
+      "stock": 40,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pv005",
+      "product_id": "pr003",
+      "price": 1200000,
+      "discount": 20,
+      "sale_starts_at": "2026-05-14T00:00:00.000Z",
+      "sale_ends_at": "2026-05-31T00:00:00.000Z",
+      "color_id": "cl002",
+      "size_id": "so005",
+      "stock": 15,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    },
+    {
+      "_id": "pv006",
+      "product_id": "pr003",
+      "price": 1200000,
+      "discount": 20,
+      "sale_starts_at": "2026-05-14T00:00:00.000Z",
+      "sale_ends_at": "2026-05-31T00:00:00.000Z",
+      "color_id": "cl003",
+      "size_id": "so006",
+      "stock": 25,
+      "status": true,
+      "createdAt": "2026-05-14T00:00:00.000Z",
+      "updatedAt": "2026-05-14T00:00:00.000Z"
+    }
+  ]
+}

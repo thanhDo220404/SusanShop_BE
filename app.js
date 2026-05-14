@@ -3,6 +3,12 @@ const cors = require("cors");
 const path = require("path");
 
 const usersRouter = require("./routes/user");
+const productCategoryRouter = require("./routes/product_category");
+const productRouter = require("./routes/product");
+const productVariantRouter = require("./routes/product_variant");
+const sizeCategoryRouter = require("./routes/size_category");
+const sizeOptionRouter = require("./routes/size_option");
+const colorRouter = require("./routes/color");
 
 const app = express();
 
@@ -19,5 +25,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/product-categories", productCategoryRouter);
+app.use("/products", productRouter);
+app.use("/product-variants", productVariantRouter);
+app.use("/size-categories", sizeCategoryRouter);
+app.use("/size-options", sizeOptionRouter);
+app.use("/colors", colorRouter);
 
 module.exports = app;
