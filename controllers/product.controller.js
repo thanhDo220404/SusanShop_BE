@@ -1,9 +1,12 @@
 const Product = require("../models/product.model");
+const Media = require("../models/media.model");
+const cloudinary = require("../config/cloudinary.config");
 
 module.exports = {
   getAll,
   getById,
   getBySlug,
+  search,
   create,
   update,
   remove,
@@ -11,7 +14,9 @@ module.exports = {
 
 async function getAll() {
   try {
-    const result = await Product.find({ deleted_at: null }).populate("category_id");
+    const result = await Product.find({ deleted_at: null })
+      .populate("category_id")
+      .populate("images");
     return result;
   } catch (error) {
     console.log("Loi lay danh sach san pham");
@@ -21,7 +26,9 @@ async function getAll() {
 
 async function getById(id) {
   try {
-    const result = await Product.findOne({ _id: id, deleted_at: null }).populate("category_id");
+    const result = await Product.findOne({ _id: id, deleted_at: null })
+      .populate("category_id")
+      .populate("images");
     if (!result) {
       throw new Error("San pham khong ton tai");
     }
@@ -34,7 +41,9 @@ async function getById(id) {
 
 async function getBySlug(slug) {
   try {
-    const result = await Product.findOne({ slug, deleted_at: null }).populate("category_id");
+    const result = await Product.findOne({ slug, deleted_at: null })
+      .populate("category_id")
+      .populate("images");
     if (!result) {
       throw new Error("San pham khong ton tai");
     }
@@ -45,9 +54,30 @@ async function getBySlug(slug) {
   }
 }
 
+async function search(keyword) {
+  try {
+    const regex = new RegExp(keyword, "i");
+    const result = await Product.find({
+      deleted_at: null,
+      status: true,
+      $or: [
+        { name: regex },
+        { slug: regex },
+      ],
+    })
+      .populate("category_id", "name slug")
+      .populate("images", "url")
+      .limit(8);
+    return result;
+  } catch (error) {
+    console.log("Loi tim kiem san pham");
+    throw error;
+  }
+}
+
 async function create(body) {
   try {
-    const { category_id, name, slug, description, status, features } = body;
+    const { category_id, name, slug, description, status, features, image_ids } = body;
 
     const existing = await Product.findOne({ slug });
     if (existing) {
@@ -61,10 +91,11 @@ async function create(body) {
       description,
       status,
       features,
+      images: image_ids || [],
     });
 
     const result = await product.save();
-    return result;
+    return await result.populate("images");
   } catch (error) {
     console.log(error);
     throw error;
@@ -73,7 +104,12 @@ async function create(body) {
 
 async function update(id, body) {
   try {
-    const { category_id, name, slug, description, status, features } = body;
+    const { category_id, name, slug, description, status, features, image_ids } = body;
+
+    const product = await Product.findOne({ _id: id, deleted_at: null });
+    if (!product) {
+      throw new Error("San pham khong ton tai");
+    }
 
     const updateData = {};
     if (category_id) updateData.category_id = category_id;
@@ -82,12 +118,13 @@ async function update(id, body) {
     if (description !== undefined) updateData.description = description;
     if (status !== undefined) updateData.status = status;
     if (features !== undefined) updateData.features = features;
+    if (image_ids !== undefined) updateData.images = image_ids;
 
     const result = await Product.findOneAndUpdate(
       { _id: id, deleted_at: null },
       updateData,
       { new: true },
-    );
+    ).populate("images");
     if (!result) {
       throw new Error("San pham khong ton tai");
     }
@@ -100,15 +137,23 @@ async function update(id, body) {
 
 async function remove(id) {
   try {
-    const result = await Product.findByIdAndUpdate(
-      id,
-      { deleted_at: new Date() },
-      { new: true },
-    );
-    if (!result) {
+    const product = await Product.findById(id);
+    if (!product) {
       throw new Error("San pham khong ton tai");
     }
-    return result;
+
+    const mediaDocs = await Media.find({ _id: { $in: product.images } });
+    const deleteFromCloudinary = mediaDocs.map((m) =>
+      cloudinary.uploader.destroy(m.public_id),
+    );
+    await Promise.all(deleteFromCloudinary);
+    await Media.deleteMany({ _id: { $in: product.images } });
+
+    product.deleted_at = new Date();
+    product.images = [];
+    await product.save();
+
+    return product;
   } catch (error) {
     console.log("Loi xoa san pham");
     throw error;

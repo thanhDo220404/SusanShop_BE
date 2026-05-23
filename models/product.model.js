@@ -10,11 +10,11 @@ const ProductSchema = new Schema(
     description: { type: String, default: "" },
     status: { type: Boolean, default: true },
     features: { type: Boolean, default: false },
+    images: [{ type: ObjectId, ref: "Media" }],
     deleted_at: { type: Date, default: null },
   },
   { timestamps: true },
 );
 
 module.exports =
-  mongoose.models.Product ||
-  mongoose.model("Product", ProductSchema);
+  mongoose.models.Product || mongoose.model("Product", ProductSchema);

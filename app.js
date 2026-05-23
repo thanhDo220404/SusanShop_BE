@@ -9,6 +9,8 @@ const productVariantRouter = require("./routes/product_variant");
 const sizeCategoryRouter = require("./routes/size_category");
 const sizeOptionRouter = require("./routes/size_option");
 const colorRouter = require("./routes/color");
+const mediaRouter = require("./routes/media");
+const cartItemRouter = require("./routes/cart_item");
 
 const app = express();
 
@@ -31,5 +33,7 @@ app.use("/product-variants", productVariantRouter);
 app.use("/size-categories", sizeCategoryRouter);
 app.use("/size-options", sizeOptionRouter);
 app.use("/colors", colorRouter);
+app.use("/media", mediaRouter);
+app.use("/cart-items", cartItemRouter);
 
 module.exports = app;

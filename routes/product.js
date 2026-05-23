@@ -6,6 +6,11 @@ module.exports = router;
 
 router.get("/", async function (req, res) {
   try {
+    const { q } = req.query;
+    if (q && q.trim()) {
+      const result = await productController.search(q.trim());
+      return res.status(200).json({ Products: result });
+    }
     const result = await productController.getAll();
     return res.status(200).json({ Products: result });
   } catch (error) {

@@ -1,0 +1,90 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Media API",
+  "dateExported": "2026-05-19",
+  "version": "1.1",
+  "folders": [
+    {
+      "name": "Media",
+      "requests": [
+        {
+          "name": "Get All Media",
+          "method": "GET",
+          "url": "http://localhost:3000/media",
+          "headers": []
+        },
+        {
+          "name": "Get Media By ID",
+          "method": "GET",
+          "url": "http://localhost:3000/media/{{media_id}}",
+          "headers": []
+        },
+        {
+          "name": "Upload Single Image",
+          "method": "POST",
+          "url": "http://localhost:3000/media/upload-single",
+          "headers": [],
+          "body": {
+            "type": "formdata",
+            "form": [
+              {
+                "name": "file",
+                "type": "file",
+                "value": "",
+                "description": "Chon 1 file anh"
+              },
+              {
+                "name": "folder",
+                "value": "susan_shop/products",
+                "description": "Thu muc Cloudinary (tu chon)"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Upload Multiple Images",
+          "method": "POST",
+          "url": "http://localhost:3000/media/upload-multiple",
+          "headers": [],
+          "body": {
+            "type": "formdata",
+            "form": [
+              {
+                "name": "files",
+                "type": "file",
+                "value": "",
+                "description": "Chon nhieu file anh"
+              },
+              {
+                "name": "folder",
+                "value": "susan_shop/products",
+                "description": "Thu muc Cloudinary (tu chon)"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Media Metadata",
+          "method": "PUT",
+          "url": "http://localhost:3000/media/{{media_id}}",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"alt_text\": \"Ao thun cotton trang\",\n  \"title\": \"Product Image 1\"\n}"
+          }
+        },
+        {
+          "name": "Delete Media",
+          "method": "DELETE",
+          "url": "http://localhost:3000/media/{{media_id}}",
+          "headers": []
+        }
+      ]
+    }
+  ]
+}

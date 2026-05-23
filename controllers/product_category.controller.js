@@ -11,7 +11,7 @@ module.exports = {
 
 async function getAll() {
   try {
-    const result = await ProductCategory.find();
+    const result = await ProductCategory.find().populate("size_category_id");
     return result;
   } catch (error) {
     console.log("Loi lay danh sach danh muc");
@@ -47,7 +47,15 @@ async function getBySlug(slug) {
 
 async function create(body) {
   try {
-    const { name, slug, description, size_category_id, parent_category_id, status, sort_order } = body;
+    const {
+      name,
+      slug,
+      description,
+      size_category_id,
+      parent_category_id,
+      status,
+      sort_order,
+    } = body;
 
     const existing = await ProductCategory.findOne({ slug });
     if (existing) {
@@ -74,18 +82,30 @@ async function create(body) {
 
 async function update(id, body) {
   try {
-    const { name, slug, description, size_category_id, parent_category_id, status, sort_order } = body;
+    const {
+      name,
+      slug,
+      description,
+      size_category_id,
+      parent_category_id,
+      status,
+      sort_order,
+    } = body;
 
     const updateData = {};
     if (name) updateData.name = name;
     if (slug) updateData.slug = slug;
     if (description !== undefined) updateData.description = description;
-    if (size_category_id !== undefined) updateData.size_category_id = size_category_id;
-    if (parent_category_id !== undefined) updateData.parent_category_id = parent_category_id;
+    if (size_category_id !== undefined)
+      updateData.size_category_id = size_category_id;
+    if (parent_category_id !== undefined)
+      updateData.parent_category_id = parent_category_id;
     if (status !== undefined) updateData.status = status;
     if (sort_order !== undefined) updateData.sort_order = sort_order;
 
-    const result = await ProductCategory.findByIdAndUpdate(id, updateData, { new: true });
+    const result = await ProductCategory.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
     if (!result) {
       throw new Error("Danh muc khong ton tai");
     }
