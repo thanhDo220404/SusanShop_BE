@@ -6,9 +6,9 @@ module.exports = router;
 
 router.get("/", async function (req, res) {
   try {
-    const { q } = req.query;
-    if (q && q.trim()) {
-      const result = await productController.search(q.trim());
+    const { search } = req.query;
+    if (search && search.trim()) {
+      const result = await productController.search(search.trim());
       return res.status(200).json({ Products: result });
     }
     const result = await productController.getAll();
