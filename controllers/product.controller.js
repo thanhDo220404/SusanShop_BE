@@ -15,8 +15,9 @@ module.exports = {
 async function getAll() {
   try {
     const result = await Product.find({ deleted_at: null })
-      .populate("category_id")
-      .populate("images");
+      .populate("category_id", "name slug status")
+      .populate("images", "url secure_url")
+      .lean();
     return result;
   } catch (error) {
     console.log("Loi lay danh sach san pham");
@@ -27,8 +28,9 @@ async function getAll() {
 async function getById(id) {
   try {
     const result = await Product.findOne({ _id: id, deleted_at: null })
-      .populate("category_id")
-      .populate("images");
+      .populate("category_id", "name slug status")
+      .populate("images", "url secure_url")
+      .lean();
     if (!result) {
       throw new Error("San pham khong ton tai");
     }
@@ -42,8 +44,8 @@ async function getById(id) {
 async function getBySlug(slug) {
   try {
     const result = await Product.findOne({ slug, deleted_at: null })
-      .populate("category_id")
-      .populate("images");
+      .populate("category_id", "name slug status")
+      .populate("images", "url secure_url");
     if (!result) {
       throw new Error("San pham khong ton tai");
     }
@@ -54,9 +56,33 @@ async function getBySlug(slug) {
   }
 }
 
+function buildDiacriticRegex(keyword) {
+  const map = {
+    a: "[aàáảãạâầấẩẫậăằắẳẵặ]",
+    A: "[AÀÁẢÃẠÂẦẤẨẪẬĂẰẮẲẴẶ]",
+    e: "[eèéẻẽẹêềếểễệ]",
+    E: "[EÈÉẺẼẸÊỀẾỂỄỆ]",
+    i: "[iìíỉĩị]",
+    I: "[IÌÍỈĨỊ]",
+    o: "[oòóỏõọôồốổỗộơờớởỡợ]",
+    O: "[OÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢ]",
+    u: "[uùúủũụưừứửữự]",
+    U: "[UÙÚỦŨỤƯỪỨỬỮỰ]",
+    y: "[yỳýỷỹỵ]",
+    Y: "[YỲÝỶỸỴ]",
+    d: "[dđ]",
+    D: "[DĐ]",
+  };
+  let pattern = "";
+  for (const ch of keyword) {
+    pattern += map[ch] || ch;
+  }
+  return new RegExp(pattern, "i");
+}
+
 async function search(keyword) {
   try {
-    const regex = new RegExp(keyword, "i");
+    const regex = buildDiacriticRegex(keyword);
     const result = await Product.find({
       deleted_at: null,
       status: true,

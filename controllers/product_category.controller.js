@@ -11,7 +11,7 @@ module.exports = {
 
 async function getAll() {
   try {
-    const result = await ProductCategory.find().populate("size_category_id");
+    const result = await ProductCategory.find().populate("size_category_id", "name").lean();
     return result;
   } catch (error) {
     console.log("Loi lay danh sach danh muc");

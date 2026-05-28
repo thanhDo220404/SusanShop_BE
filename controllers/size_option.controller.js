@@ -11,7 +11,7 @@ module.exports = {
 
 async function getAll() {
   try {
-    const result = await SizeOption.find().populate("size_category_id");
+    const result = await SizeOption.find().populate("size_category_id", "name");
     return result;
   } catch (error) {
     console.log("Loi lay danh sach size option");
@@ -21,7 +21,7 @@ async function getAll() {
 
 async function getById(id) {
   try {
-    const result = await SizeOption.findById(id).populate("size_category_id");
+    const result = await SizeOption.findById(id).populate("size_category_id", "name");
     if (!result) {
       throw new Error("Size option khong ton tai");
     }

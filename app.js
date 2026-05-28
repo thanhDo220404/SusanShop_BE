@@ -11,6 +11,11 @@ const sizeOptionRouter = require("./routes/size_option");
 const colorRouter = require("./routes/color");
 const mediaRouter = require("./routes/media");
 const cartItemRouter = require("./routes/cart_item");
+const couponRouter = require("./routes/coupon");
+const orderRouter = require("./routes/order");
+const orderItemRouter = require("./routes/order_item");
+const userAddressRouter = require("./routes/user_address");
+const reviewRouter = require("./routes/review");
 
 const app = express();
 
@@ -35,5 +40,10 @@ app.use("/size-options", sizeOptionRouter);
 app.use("/colors", colorRouter);
 app.use("/media", mediaRouter);
 app.use("/cart-items", cartItemRouter);
+app.use("/coupons", couponRouter);
+app.use("/orders", orderRouter);
+app.use("/order-items", orderItemRouter);
+app.use("/user-addresses", userAddressRouter);
+app.use("/reviews", reviewRouter);
 
 module.exports = app;

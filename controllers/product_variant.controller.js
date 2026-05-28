@@ -1,4 +1,5 @@
 const ProductVariant = require("../models/product_variant.model");
+const { paginate, paginatedResponse } = require("../utils/pagination");
 
 module.exports = {
   getAll,
@@ -9,13 +10,44 @@ module.exports = {
   remove,
 };
 
-async function getAll() {
+async function getAll(options = {}) {
   try {
-    const result = await ProductVariant.find()
-      .populate("product_id")
-      .populate("color_id")
-      .populate("size_id");
-    return result;
+    const hasPagination = options.page || options.limit;
+
+    if (!hasPagination) {
+      const result = await ProductVariant.find()
+        .populate({
+          path: "product_id",
+          populate: [
+            { path: "images", select: "url secure_url" },
+            { path: "category_id", select: "name slug status" },
+          ],
+        })
+        .populate("color_id", "name hex")
+        .populate("size_id", "name");
+      return { ProductVariants: result };
+    }
+
+    const { page, limit, skip } = paginate(options);
+
+    const [data, total] = await Promise.all([
+      ProductVariant.find()
+        .populate({
+          path: "product_id",
+          populate: [
+            { path: "images", select: "url secure_url" },
+            { path: "category_id", select: "name slug status" },
+          ],
+        })
+        .populate("color_id", "name hex")
+        .populate("size_id", "name")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      ProductVariant.countDocuments(),
+    ]);
+
+    return { ProductVariants: data, pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } };
   } catch (error) {
     console.log("Loi lay danh sach bien the");
     throw error;
@@ -25,9 +57,15 @@ async function getAll() {
 async function getById(id) {
   try {
     const result = await ProductVariant.findById(id)
-      .populate("product_id")
-      .populate("color_id")
-      .populate("size_id");
+      .populate({
+        path: "product_id",
+        populate: [
+          { path: "images", select: "url secure_url" },
+          { path: "category_id", select: "name slug status" },
+        ],
+      })
+      .populate("color_id", "name hex")
+      .populate("size_id", "name");
     if (!result) {
       throw new Error("Bien the khong ton tai");
     }
@@ -41,8 +79,15 @@ async function getById(id) {
 async function getByProductId(productId) {
   try {
     const result = await ProductVariant.find({ product_id: productId })
-      .populate("color_id")
-      .populate("size_id");
+      .populate({
+        path: "product_id",
+        populate: [
+          { path: "images", select: "url secure_url" },
+          { path: "category_id", select: "name slug status" },
+        ],
+      })
+      .populate("color_id", "name hex")
+      .populate("size_id", "name");
     return result;
   } catch (error) {
     console.log("Loi lay bien the theo san pham");

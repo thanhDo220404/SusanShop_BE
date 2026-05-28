@@ -14,13 +14,17 @@ module.exports = {
 async function getAll() {
   try {
     const result = await CartItem.find()
-      .populate("user_id")
+      .populate("user_id", "name email")
       .populate({
         path: "product_variant_id",
         populate: [
-          { path: "product_id", populate: { path: "images" } },
-          { path: "color_id" },
-          { path: "size_id" },
+          {
+            path: "product_id",
+            select: "name slug",
+            populate: { path: "images", select: "url secure_url" },
+          },
+          { path: "color_id", select: "name hex" },
+          { path: "size_id", select: "name" },
         ],
       });
     return result;
@@ -33,13 +37,17 @@ async function getAll() {
 async function getById(id) {
   try {
     const result = await CartItem.findById(id)
-      .populate("user_id")
+      .populate("user_id", "name email")
       .populate({
         path: "product_variant_id",
         populate: [
-          { path: "product_id", populate: { path: "images" } },
-          { path: "color_id" },
-          { path: "size_id" },
+          {
+            path: "product_id",
+            select: "name slug",
+            populate: { path: "images", select: "url secure_url" },
+          },
+          { path: "color_id", select: "name hex" },
+          { path: "size_id", select: "name" },
         ],
       });
     if (!result) {
@@ -55,13 +63,17 @@ async function getById(id) {
 async function getByUserId(userId) {
   try {
     const result = await CartItem.find({ user_id: userId })
-      .populate("user_id")
+      .populate("user_id", "name email")
       .populate({
         path: "product_variant_id",
         populate: [
-          { path: "product_id", populate: { path: "images" } },
-          { path: "color_id" },
-          { path: "size_id" },
+          {
+            path: "product_id",
+            select: "name slug",
+            populate: { path: "images", select: "url secure_url" },
+          },
+          { path: "color_id", select: "name hex" },
+          { path: "size_id", select: "name" },
         ],
       });
     return result;

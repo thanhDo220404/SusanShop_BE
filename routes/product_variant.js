@@ -6,8 +6,9 @@ module.exports = router;
 
 router.get("/", async function (req, res) {
   try {
-    const result = await productVariantController.getAll();
-    return res.status(200).json({ ProductVariants: result });
+    const { page, limit } = req.query;
+    const result = await productVariantController.getAll({ page, limit });
+    return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ mess: error.message || error });
   }
